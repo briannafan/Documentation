@@ -1,0 +1,2949 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="AddingNewJSApi.html">
+      
+      
+        <link rel="next" href="Storage.html">
+      
+      
+      <link rel="icon" href="../../assets/WebKit.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+    
+    
+      
+        <title>JS Wrappers and IDL Files - WebKit Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/webkit.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#js-wrappers-and-idl-files" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="WebKit Documentation" class="md-header__button md-logo" aria-label="WebKit Documentation" data-md-component="logo">
+      
+  <img src="../../assets/WebKit.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WebKit Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              JS Wrappers and IDL Files
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/webkit/Documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  WebKit Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Build%20%26%20Debug/BuildOptions.html" class="md-tabs__link">
+          
+  
+  Build & Debug
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../DOM.html" class="md-tabs__link">
+          
+  
+  Deep Dive
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Getting%20Started/BugTracking.html" class="md-tabs__link">
+          
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Infrastructure/MemoryInspection.html" class="md-tabs__link">
+          
+  
+  Infrastructure
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Other/Contributors.html" class="md-tabs__link">
+          
+  
+  Other
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Ports/Introduction.html" class="md-tabs__link">
+          
+  
+  Ports
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="WebKit Documentation" class="md-nav__button md-logo" aria-label="WebKit Documentation" data-md-component="logo">
+      
+  <img src="../../assets/WebKit.svg" alt="logo">
+
+    </a>
+    WebKit Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/webkit/Documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Build & Debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Build & Debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Build%20%26%20Debug/BuildOptions.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Options
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Build%20%26%20Debug/DebuggingOnTheCommandLine.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging With GDB/LLDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Build%20%26%20Debug/DebuggingWithVS.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging With Visual Studio
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Build%20%26%20Debug/DebuggingWithXcode.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging With Xcode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Build%20%26%20Debug/Logging.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Build%20%26%20Debug/Tests.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Deep Dive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Deep Dive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DOM.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MemoryManagement.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Memory Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="AddingNewJSApi.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding JS APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    JS Wrappers and IDL Files
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="JSWrappers.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    JS Wrappers and IDL Files
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#js-wrapper-lifecycle-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      JS Wrapper Lifecycle Management
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visit-children" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visit Children
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opaque-roots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opaque Roots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#active-dom-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active DOM Objects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Active DOM Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-pending-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Pending Activity
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Storage.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="WebKit2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Build
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Build
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Build/AddingNewFile.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding a New File
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Build/CI.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Continuous Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Build/ConditionalCompilation.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conditional Compilation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Build/UnifiedBuilds.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unified Build System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            GitHub
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/GitConfig.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git Config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/GitHub.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/Merging.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/Migration.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/PullRequests.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pull Requests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub/SourceControl.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Source Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    JSC
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            JSC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSC/JSCObjectAccessOptimization.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Object Access Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSC/JSCTypeInference.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Type Inference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../JSC/JavaScriptCore.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScriptCore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Layout & Rendering
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            Layout & Rendering
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Layout%20%26%20Rendering/DisplayTree.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFC Display Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Libpas
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            Libpas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Libpas/Internals.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Internals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Libpas/Libpas.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Libpas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Libpas/LibpasBuildAndTest.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How To Build And Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/CompressionStreams.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compression Streams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/MediaSourceExtensions.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Media Source Extensions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Modules/Modules.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting%20Started/BugTracking.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bug Tracking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting%20Started/ContributingCode.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started Contributing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting%20Started/Introduction.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction to WebKit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Infrastructure
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Infrastructure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Infrastructure/MemoryInspection.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Memory Inspection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Infrastructure/UpdatingAngle.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Update ANGLE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Infrastructure/WPTTests.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Web Platform Tests Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributors.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contributors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Licensing.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Licensing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Contributor Meetings
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            Contributor Meetings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2010.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2010
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2011.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2011
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2012.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2012
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2013.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2013
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2014.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2014
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2015.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2015
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2016.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2016
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2017.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2017
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2018.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2018
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2019.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2019
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2020.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2021.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2022.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2022
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Other/Contributor%20Meetings/ContributorMeeting2023.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributors Meeting 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ports
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Ports
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/Introduction.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What Are WebKit Ports?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/WindowsPort.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows port
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    WebKitGTK and WPE WebKit
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            WebKitGTK and WPE WebKit
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/WebKitGTK%20and%20WPE%20WebKit/DependenciesPolicy.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependencies Policy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/WebKitGTK%20and%20WPE%20WebKit/GCCRequirement.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCC Requirement
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/WebKitGTK%20and%20WPE%20WebKit/Multimedia.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multimedia
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/WebKitGTK%20and%20WPE%20WebKit/ReleasesAndVersioning.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Releases and Versioning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/WebKitGTK%20and%20WPE%20WebKit/SecurityUpdates.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security Updates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ports/WebKitGTK%20and%20WPE%20WebKit/TipsForMaintainers.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tips for Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#js-wrapper-lifecycle-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      JS Wrapper Lifecycle Management
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visit-children" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visit Children
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#opaque-roots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Opaque Roots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#active-dom-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active DOM Objects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Active DOM Objects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-pending-activity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating a Pending Activity
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/webkit/Documentation/blob/main/docs/Deep Dive/Architecture/JSWrappers.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="js-wrappers-and-idl-files">JS Wrappers and IDL Files<a class="headerlink" href="#js-wrappers-and-idl-files" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>In addition to typical C++ translation units (.cpp) and C++ header files (.cpp) along with some Objective-C and Objective-C++ files,
+<a href="https://github.com/WebKit/WebKit/tree/main/Source/WebCore">WebCore</a> contains hundreds of <a href="https://webidl.spec.whatwg.org">Web IDL</a> (.idl) files.
+<a href="https://webidl.spec.whatwg.org">Web IDL</a> is an <a href="https://en.wikipedia.org/wiki/Interface_description_language">interface description language</a>
+and it's used to define the shape and the behavior of JavaScript API implemented in WebKit.</p>
+<p>When building WebKit, a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/scripts/CodeGeneratorJS.pm">perl script</a>
+generates appropriate C++ translation units and C++ header files corresponding to these IDL files under <code>WebKitBuild/Debug/DerivedSources/WebCore/</code>
+where <code>Debug</code> is the current build configuration (e.g. it could be <code>Release-iphonesimulator</code> for example).</p>
+<p>These auto-generated files along with manually written files <a href="https://github.com/WebKit/WebKit/tree/main/Source/WebCore/bindings">Source/WebCore/bindings</a>
+are called <strong>JS DOM binding code</strong> and implements JavaScript API for objects and concepts whose underlying shape and behaviors are written in C++.</p>
+<p>For example, C++ implementation of <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node">Node</a>
+is <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/Node.h">Node class</a>
+and its JavaScript interface is implemented by <code>JSNode</code> class.
+The class declaration and most of definitions are auto-generated
+at <code>WebKitBuild/Debug/DerivedSources/WebCore/JSNode.h</code> and <code>WebKitBuild/Debug/DerivedSources/WebCore/JSNode.cpp</code> for debug builds.
+It also has some custom, manually written, bindings code in
+<a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/JSNodeCustom.cpp">Source/WebCore/bindings/js/JSNodeCustom.cpp</a>.
+Similarly, C++ implementation of <a href="https://developer.mozilla.org/en-US/docs/Web/API/Range">Range interface</a>
+is <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/Range.h">Range class</a>
+whilst its JavaScript API is implemented by the auto-generated JSRange class
+(located at <code>WebKitBuild/Debug/DerivedSources/WebCore/JSRange.h</code> and <code>WebKitBuild/Debug/DerivedSources/WebCore/JSRange.cpp</code> for debug builds)
+We call instances of these JSX classes <em>JS wrappers</em> of X.</p>
+<p>These JS wrappers exist in what we call a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/DOMWrapperWorld.h"><code>DOMWrapperWorld</code></a>.
+Each <code>DOMWrapperWorld</code> has its own JS wrapper for each C++ object.
+As a result, a single C++ object may have multiple JS wrappers in distinct <code>DOMWrapperWorld</code>s.
+The most important <code>DOMWrapperWorld</code> is the main <code>DOMWrapperWorld</code> which runs the scripts of web pages WebKit loaded
+while other <code>DOMWrapperWorld</code>s are typically used to run code for browser extensions and other code injected by applications that embed WebKit.
+<img alt="Diagram of JS wrappers" src="/assets/JSWrapper.png" />
+JSX.h provides <code>toJS</code> functions which creates a JS wrapper for X
+in a given <a href="https://developer.mozilla.org/en-US/docs/Glossary/Global_object">global object</a>’s <code>DOMWrapperWorld</code>,
+and toWrapped function which returns the underlying C++ object.
+For example, <code>toJS</code> function for <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/Node.h">Node</a>
+is defined in <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/JSNodeCustom.h">Source/WebCore/bindings/js/JSNodeCustom.h</a>.</p>
+<p>When there is already a JS wrapper object for a given C++ object,
+<code>toJS</code> function will find the appropriate JS wrapper in
+a <a href="https://github.com/WebKit/WebKit/blob/ea1a56ee11a26f292f3d2baed2a3aea95fea40f1/Source/WebCore/bindings/js/DOMWrapperWorld.h#L74">hash map</a>
+of the given <code>DOMWrapperWorld</code>.
+Because a hash map lookup is expensive, some WebCore objects inherit from
+<a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/ScriptWrappable.h">ScriptWrappable</a>,
+which has an inline pointer to the JS wrapper for the main world if one was already created.</p>
+<h2 id="js-wrapper-lifecycle-management">JS Wrapper Lifecycle Management<a class="headerlink" href="#js-wrapper-lifecycle-management" title="Permanent link">&para;</a></h2>
+<p>As a general rule, a JS wrapper keeps its underlying C++ object alive by means of reference counting
+in <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/JSDOMWrapper.h">JSDOMWrapper</a> temple class
+from which all JS wrappers in WebCore inherits.
+However, <strong>C++ objects do not keep their corresponding JS wrapper in each world alive</strong> by the virtue of them staying alive
+as such a circular dependency will result in a memory leak.</p>
+<p>There are two primary mechanisms to keep JS wrappers alive in <a href="https://github.com/WebKit/WebKit/tree/main/Source/WebCore">WebCore</a>:</p>
+<ul>
+<li><strong>Visit Children</strong> - When JavaScriptCore’s garbage collection visits some JS wrapper during
+    the <a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection#Basic_algorithm">marking phase</a>,
+    visit another JS wrapper or JS object that needs to be kept alive.</li>
+<li><strong>Reachable from Opaque Roots</strong> - Tell JavaScriptCore’s garbage collection that a JS wrapper is reachable
+    from an opaque root which was added to the set of opaque roots during marking phase.</li>
+</ul>
+<h2 id="visit-children">Visit Children<a class="headerlink" href="#visit-children" title="Permanent link">&para;</a></h2>
+<p><em>Visit Children</em> is the mechanism we use when a JS wrapper needs to keep another JS wrapper or
+<a href="https://github.com/WebKit/WebKit/blob/main/Source/JavaScriptCore/runtime/JSObject.h">JS object</a> alive.</p>
+<p>For example, <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/ErrorEvent.idl"><code>ErrorEvent</code> object</a>
+uses this method in
+<a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/JSErrorEventCustom.cpp">Source/WebCore/bindings/js/JSErrorEventCustom.cpp</a>
+to keep its "error" IDL attribute as follows:</p>
+<pre><code class="language-cpp">template&lt;typename Visitor&gt;
+void JSErrorEvent::visitAdditionalChildren(Visitor&amp; visitor)
+{
+    wrapped().originalError().visit(visitor);
+}
+
+DEFINE_VISIT_ADDITIONAL_CHILDREN(JSErrorEvent);
+</code></pre>
+<p>Here, <code>DEFINE_VISIT_ADDITIONAL_CHILDREN</code> macro generates template instances of visitAdditionalChildren
+which gets called by the JavaScriptCore's garbage collector.
+When the garbage collector visits an instance <code>ErrorEvent</code> object,
+it also visits <code>wrapped().originalError()</code>, which is the JavaScript value of "error" attribute:</p>
+<pre><code class="language-cpp">class ErrorEvent final : public Event {
+...
+    const JSValueInWrappedObject&amp; originalError() const { return m_error; }
+    SerializedScriptValue* serializedError() const { return m_serializedError.get(); }
+...
+    JSValueInWrappedObject m_error;
+    RefPtr&lt;SerializedScriptValue&gt; m_serializedError;
+    bool m_triedToSerialize { false };
+};
+</code></pre>
+<p>Note that <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/JSValueInWrappedObject.h"><code>JSValueInWrappedObject</code></a>
+uses <a href="https://github.com/WebKit/WebKit/blob/main/Source/JavaScriptCore/heap/Weak.h"><code>Weak</code></a>,
+which does not keep the referenced object alive on its own.
+We can't use a reference type such as <a href="https://github.com/WebKit/WebKit/blob/main/Source/JavaScriptCore/heap/Strong.h"><code>Strong</code></a>
+which keeps the referenced object alive on its own since the stored JS object may also have this <code>ErrorEvent</code> object stored as its property.
+Because the garbage collector has no way of knowing or clearing the <code>Strong</code> reference
+or the property to <code>ErrorEvent</code> in this hypothetical version of <code>ErrorEvent</code>,
+it would never be able to collect either object, resulting in a memory leak.</p>
+<p>To use this method of keeping a JavaScript object or wrapper alive, add <code>JSCustomMarkFunction</code> to the IDL file,
+then introduce JS*Custom.cpp file under <a href="https://github.com/WebKit/WebKit/tree/main/Source/WebCore/bindings/js">Source/WebCore/bindings/js</a>
+and implement <code>template&lt;typename Visitor&gt; void JS*Event::visitAdditionalChildren(Visitor&amp; visitor)</code> as seen above for <code>ErrorEvent</code>.</p>
+<p><strong>visitAdditionalChildren is called concurrently</strong> while the main thread is running.
+Any operation done in visitAdditionalChildren needs to be multi-thread safe.
+For example, it cannot increment or decrement the reference count of a <code>RefCounted</code> object
+or create a new <code>WeakPtr</code> from <code>CanMakeWeakPtr</code> since these WTF classes are not thread safe.</p>
+<h2 id="opaque-roots">Opaque Roots<a class="headerlink" href="#opaque-roots" title="Permanent link">&para;</a></h2>
+<p><em>Reachable from Opaque Roots</em> is the mechanism we use when we have an underlying C++ object and want to keep JS wrappers of other C++ objects alive.</p>
+<p>To see why, let's consider a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/css/StyleSheet.idl"><code>StyleSheet</code> object</a>.
+So long as this object is alive, we also need to keep the DOM node returned by the <code>ownerNode</code> attribute.
+Also, the object itself needs to be kept alive so long as the owner node is alive
+since this [<code>StyleSheet</code> object] can be accessed via <a href="https://drafts.csswg.org/cssom/#the-linkstyle-interface"><code>sheet</code> IDL attribute</a>
+of the owner node.
+If we were to use the <em>visit children</em> mechanism,
+we need to visit every JS wrapper of the owner node whenever this <code>StyleSheet</code> object is visited by the garbage collector,
+and we need to visit every JS wrapper of the <code>StyleSheet</code> object whenever an owner node is visited by the garbage collector.
+But in order to do so, we need to query every <code>DOMWrapperWorld</code>'s wrapper map to see if there is a JavaScript wrapper.
+This is an expensive operation that needs to happen all the time,
+and creates a tie coupling between <code>Node</code> and <code>StyleSheet</code> objects
+since each JS wrapper objects need to be  aware of other objects' existence. </p>
+<p><em>Opaque roots</em> solves these problems by letting the garbage collector know that a particular JavaScript wrapper needs to be kept alive
+so long as the gargabe collector had encountered specific opaque root(s) this JavaScript wrapper cares about
+even if the garbage collector didn't visit the JavaScript wrapper directly.
+An opaque root is simply a <code>void*</code> identifier the garbage collector keeps track of during each marking phase,
+and it does not conform to a specific interface or behavior.
+It could have been an arbitrary integer value but <code>void*</code> is used out of convenience since pointer values of live objects are unique.</p>
+<p>In the case of a <code>StyleSheet</code> object, <code>StyleSheet</code>'s JavaScript wrapper tells the garbage collector that it needs to be kept alive
+because an opaque root it cares about has been encountered whenever <code>ownerNode</code> is visited by the garbage collector.</p>
+<p>In the most simplistic model, the opaque root for this case will be the <code>ownerNode</code> itself.
+However, each <code>Node</code> object also has to keep its parent, siblings, and children alive.
+To this end, each <code>Node</code> designates the <a href="https://dom.spec.whatwg.org/#concept-tree-root">root</a> node as its opaque root.
+Both <code>Node</code> and <code>StyleSheet</code> objects use this unique opaque root as a way of communicating with the gargage collector.</p>
+<p>For example, <code>StyleSheet</code> object informs the garbage collector of this opaque root when it's asked to visit its children in
+<a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/bindings/js/JSStyleSheetCustom.cpp">JSStyleSheetCustom.cpp</a>:</p>
+<pre><code class="language-cpp">template&lt;typename Visitor&gt;
+void JSStyleSheet::visitAdditionalChildren(Visitor&amp; visitor)
+{
+    visitor.addOpaqueRoot(root(&amp;wrapped()));
+}
+</code></pre>
+<p>Here, <code>void* root(StyleSheet*)</code> returns the opaque root of the <code>StyleSheet</code> object as follows:</p>
+<pre><code class="language-cpp">inline void* root(StyleSheet* styleSheet)
+{
+    if (CSSImportRule* ownerRule = styleSheet-&gt;ownerRule())
+        return root(ownerRule);
+    if (Node* ownerNode = styleSheet-&gt;ownerNode())
+        return root(ownerNode);
+    return styleSheet;
+}
+</code></pre>
+<p>And then in <code>JSStyleSheet.cpp</code> (located at <code>WebKitBuild/Debug/DerivedSources/WebCore/JSStyleSheet.cpp</code> for debug builds)
+<code>JSStyleSheetOwner</code> (a helper JavaScript object to communicate with the garbage collector) tells the garbage collector
+that <code>JSStyleSheet</code> should be kept alive so long as the garbage collector had encountered this <code>StyleSheet</code>'s opaque root:</p>
+<pre><code class="language-cpp">bool JSStyleSheetOwner::isReachableFromOpaqueRoots(JSC::Handle&lt;JSC::Unknown&gt; handle, void*, AbstractSlotVisitor&amp; visitor, const char** reason)
+{
+    auto* jsStyleSheet = jsCast&lt;JSStyleSheet*&gt;(handle.slot()-&gt;asCell());
+    void* root = WebCore::root(&amp;jsStyleSheet-&gt;wrapped());
+    if (UNLIKELY(reason))
+        *reason = &quot;Reachable from jsStyleSheet&quot;;
+    return visitor.containsOpaqueRoot(root);
+}
+</code></pre>
+<p>Generally, using opaque roots as a way of keeping JavaScript wrappers involve two steps:</p>
+<ol>
+<li>Add opaque roots in <code>visitAdditionalChildren</code>.</li>
+<li>Return true in <code>isReachableFromOpaqueRoots</code> when relevant opaque roots are found.</li>
+</ol>
+<p>The first step can be achieved by using the aforementioned <code>JSCustomMarkFunction</code> with <code>visitAdditionalChildren</code>.
+Alternatively and more preferably, <code>GenerateAddOpaqueRoot</code> can be added to the IDL interface to auto-generate this code.
+For example, <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/AbortController.idl">AbortController.idl</a>
+makes use of this IDL attribute as follows:</p>
+<pre><code class="language-cpp">[
+    Exposed=(Window,Worker),
+    GenerateAddOpaqueRoot=signal
+] interface AbortController {
+    [CallWith=ScriptExecutionContext] constructor();
+
+    [SameObject] readonly attribute AbortSignal signal;
+
+    [CallWith=GlobalObject] undefined abort(optional any reason);
+};
+</code></pre>
+<p>Here, <code>signal</code> is a public member function funtion of
+the <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/AbortController.h">underlying C++ object</a>:</p>
+<pre><code class="language-cpp">class AbortController final : public ScriptWrappable, public RefCounted&lt;AbortController&gt; {
+    WTF_MAKE_ISO_ALLOCATED(AbortController);
+public:
+    static Ref&lt;AbortController&gt; create(ScriptExecutionContext&amp;);
+    ~AbortController();
+
+    AbortSignal&amp; signal();
+    void abort(JSDOMGlobalObject&amp;, JSC::JSValue reason);
+
+private:
+    explicit AbortController(ScriptExecutionContext&amp;);
+
+    Ref&lt;AbortSignal&gt; m_signal;
+};
+</code></pre>
+<p>When <code>GenerateAddOpaqueRoot</code> is specified without any value, it automatically calls <code>opaqueRoot()</code> instead.</p>
+<p>Like visitAdditionalChildren, <strong>adding opaque roots happen concurrently</strong> while the main thread is running.
+Any operation done in visitAdditionalChildren needs to be multi-thread safe.
+For example, it cannot increment or decrement the reference count of a <code>RefCounted</code> object
+or create a new <code>WeakPtr</code> from <code>CanMakeWeakPtr</code> since these WTF classes are not thread safe.</p>
+<p>The second step can be achived by adding <code>CustomIsReachable</code> to the IDL file and
+implementing <code>JS*Owner::isReachableFromOpaqueRoots</code> in JS*Custom.cpp file.
+Alternatively and more preferably, <code>GenerateIsReachable</code> can be added to IDL file to automatically generate this code
+with the following values:</p>
+<ul>
+<li>No value - Adds the result of calling <code>root(T*)</code> on the underlying C++ object of type T as the opaque root.</li>
+<li><code>Impl</code> - Adds the underlying C++ object as the opaque root.</li>
+<li><code>ReachableFromDOMWindow</code> - Adds a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/page/DOMWindow.h"><code>DOMWindow</code></a>
+    returned by <code>window()</code> as the opaque root.</li>
+<li><code>ReachableFromNavigator</code> - Adds a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/page/Navigator.h"><code>Navigator</code></a>
+    returned by <code>navigator()</code> as the opaque root.</li>
+<li><code>ImplDocument</code> - Adds a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/Document.h"><code>Document</code></a>
+    returned by <code>document()</code> as the opaque root.</li>
+<li><code>ImplElementRoot</code> - Adds the root node of a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/Element.h"><code>Element</code></a>
+    returned by <code>element()</code> as the opaque root.</li>
+<li><code>ImplOwnerNodeRoot</code> - Adds the root node of a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/Node.h"><code>Node</code></a>
+    returned by <code>ownerNode()</code> as the opaque root.</li>
+<li><code>ImplScriptExecutionContext</code> - Adds a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/ScriptExecutionContext.h"><code>ScriptExecutionContext</code></a>
+    returned by <code>scriptExecutionContext()</code> as the opaque root.</li>
+</ul>
+<p>Similar to visiting children or adding opaque roots, <strong>whether an opaque root is reachable or not is checked in parallel</strong>.
+However, it happens <strong>while the main thread is paused</strong> unlike visiting children or adding opaque roots,
+which happen concurrently while the main thread is running.
+This means that any operation done in <code>JS*Owner::isReachableFromOpaqueRoots</code>
+or any function called by GenerateIsReachable cannot have thread unsafe side effects
+such as incrementing or decrementing the reference count of a <code>RefCounted</code> object
+or creating a new <code>WeakPtr</code> from <code>CanMakeWeakPtr</code> since these WTF classes' mutation operations are not thread safe.</p>
+<h2 id="active-dom-objects">Active DOM Objects<a class="headerlink" href="#active-dom-objects" title="Permanent link">&para;</a></h2>
+<p>Visit children and opaque roots are great way to express lifecycle relationships between JS wrappers
+but there are cases in which a JS wrapper needs to be kept alive without any relation to other objects.
+Consider <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest"><code>XMLHttpRequest</code></a>.
+In the following example, JavaScript loses all references to the <code>XMLHttpRequest</code> object and its event listener
+but when a new response gets received, an event will be dispatched on the object,
+re-introducing a new JavaScript reference to the object.
+That is, the object survives garbage collection's
+<a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection#Basic_algorithm">mark and sweep cycles</a>
+without having any ties to other <a href="https://en.wikipedia.org/wiki/Tracing_garbage_collection#Reachability_of_an_object">"root" objects</a>.</p>
+<pre><code class="language-js">function fetchURL(url, callback)
+{
+    const request = new XMLHttpRequest();
+    request.addEventListener(&quot;load&quot;, callback);
+    request.open(&quot;GET&quot;, url);
+    request.send();
+}
+</code></pre>
+<p>In WebKit, we consider such an object to have a <em>pending activity</em>.
+Expressing the presence of such a pending activity is a primary use case of
+<a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/ActiveDOMObject.h"><code>ActiveDOMObject</code></a>.</p>
+<p>By making an object inherit from <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/ActiveDOMObject.h"><code>ActiveDOMObject</code></a>
+and <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/xml/XMLHttpRequest.idl#L42">annotating IDL as such</a>,
+WebKit will <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/bindings/scripts/CodeGeneratorJS.pm#L5029">automatically generate <code>isReachableFromOpaqueRoot</code> function</a>
+which returns true whenever <code>ActiveDOMObject::hasPendingActivity</code> returns true
+even though the garbage collector may not have encountered any particular opaque root to speak of in this instance.</p>
+<p>In the case of <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/xml/XMLHttpRequest.h"><code>XMLHttpRequest</code></a>,
+<code>hasPendingActivity</code> <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/xml/XMLHttpRequest.cpp#L1195">will return true</a>
+so long as there is still an active network activity associated with the object.
+Once the resource is fully fetched or failed, it ceases to have a pending activity.
+This way, JS wrapper of <code>XMLHttpRequest</code> is kept alive so long as there is an active network activity.</p>
+<p>There is one other related use case of active DOM objects,
+and that's when a document enters the <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/history/BackForwardCache.h">back-forward cache</a>
+and when the entire <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/page/Page.h">page</a> has to pause
+for <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L45">other reasons</a>.</p>
+<p>When this happens, each active DOM object associated with the document
+<a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L70">gets suspended</a>.
+Each active DOM object can use this opportunity to prepare itself to pause whatever pending activity;
+for example, <code>XMLHttpRequest</code> <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/xml/XMLHttpRequest.cpp#L1157">will stop dispatching <code>progress</code> event</a>
+and media elements <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/html/HTMLMediaElement.cpp#L6008">will stop playback</a>.
+When a document gets out of the back-forward cache or resumes for other reasons,
+each active DOM object <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L71">gets resumed</a>.
+Here, each object has the opportunity to resurrect the previously pending activity once again.</p>
+<h3 id="creating-a-pending-activity">Creating a Pending Activity<a class="headerlink" href="#creating-a-pending-activity" title="Permanent link">&para;</a></h3>
+<p>There are a few ways to create a pending activity on an <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/ActiveDOMObject.h">active DOM objects</a>.</p>
+<p>When the relevant Web standards says to <a href="https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task">queue a task</a> to do some work,
+one of the following member functions of <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/ActiveDOMObject.h"><code>ActiveDOMObject</code></a> should be used:</p>
+<ul>
+<li><a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L106"><code>queueTaskKeepingObjectAlive</code></a></li>
+<li><a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L114"><code>queueCancellableTaskKeepingObjectAlive</code></a></li>
+<li><a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L124"><code>queueTaskToDispatchEvent</code></a></li>
+<li><a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L130"><code>queueCancellableTaskToDispatchEvent</code></a></li>
+</ul>
+<p>These functions will automatically create a pending activity until a newly enqueued task is executed.</p>
+<p>Alternatively, <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L97"><code>makePendingActivity</code></a>
+can be used to create a <a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/dom/ActiveDOMObject.h#L78">pending activity token</a>
+for an active DOM object.
+This will keep a pending activity on the active DOM object until all tokens are dead.</p>
+<p>Finally, when there is a complex condition under which a pending activity exists,
+an active DOM object can override <a href="https://github.com/WebKit/WebKit/blob/64cdede660d9eaea128fd151281f4715851c4fe2/Source/WebCore/dom/ActiveDOMObject.h#L147"><code>virtualHasPendingActivity</code></a>
+member function and return true whilst such a condition holds.
+Note that <code>virtualHasPendingActivity</code> should return true so long as there is a possibility of dispatching an event or invoke JavaScript in any way in the future.
+In other words, a pending activity should exist while an object is doing some work in C++ well before any event dispatching is scheduled.
+Anytime there is no pending activity, JS wrappers of the object can get deleted by the garbage collector.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      WebKit and the WebKit logo are trademarks of Apple Inc.
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+    
+    
+    
+      
+      
+    
+    <a href="https://front-end.social/@webkit" target="_blank" rel="noopener me" title="front-end.social" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.5 102.5 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5m-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://webkit.slack.com" target="_blank" rel="noopener" title="webkit.slack.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1s21.16-47.06 47.06-47.06h47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06S448 171 448 196.9s-21.16 47.06-47.06 47.06h-47.06zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06S309 480 283.1 480s-47.06-21.16-47.06-47.06v-47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06s21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/webkit/webkit" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["header.autohide", "search.share", "navigation.tabs", "navigation.tracking", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>

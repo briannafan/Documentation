@@ -1,0 +1,3517 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="Logging.html">
+      
+      
+        <link rel="next" href="../Deep%20Dive/DOM.html">
+      
+      
+      <link rel="icon" href="../assets/WebKit.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.47">
+    
+    
+      
+        <title>Testing - WebKit Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/webkit.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#testing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="WebKit Documentation" class="md-header__button md-logo" aria-label="WebKit Documentation" data-md-component="logo">
+      
+  <img src="../assets/WebKit.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            WebKit Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Testing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/webkit/Documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        
+  
+    
+  
+  WebKit Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="BuildOptions.html" class="md-tabs__link">
+          
+  
+  Build & Debug
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Deep%20Dive/DOM.html" class="md-tabs__link">
+          
+  
+  Deep Dive
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Getting%20Started/BugTracking.html" class="md-tabs__link">
+          
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Infrastructure/MemoryInspection.html" class="md-tabs__link">
+          
+  
+  Infrastructure
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Other/Contributors.html" class="md-tabs__link">
+          
+  
+  Other
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Ports/Introduction.html" class="md-tabs__link">
+          
+  
+  Ports
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="WebKit Documentation" class="md-nav__button md-logo" aria-label="WebKit Documentation" data-md-component="logo">
+      
+  <img src="../assets/WebKit.svg" alt="logo">
+
+    </a>
+    WebKit Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/webkit/Documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Build & Debug
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Build & Debug
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="BuildOptions.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Building Options
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DebuggingOnTheCommandLine.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging With GDB/LLDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DebuggingWithVS.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging With Visual Studio
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="DebuggingWithXcode.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging With Xcode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Logging.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Testing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Tests.html" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Testing
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#correctness-testing-in-webkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correctness Testing in WebKit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-testing-in-webkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Testing in WebKit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layout-tests-tests-of-the-web-for-the-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layout Tests: Tests of the Web for the Web
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layout Tests: Tests of the Web for the Web">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-files-and-expected-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Files and Expected Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Files and Expected Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Directory Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imported-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imported Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      HTTP Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Expectations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-layout-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Layout Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Layout Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repeating-layout-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Repeating Layout Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-expected-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating Expected Results
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#different-styles-of-layout-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Different Styles of Layout Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Different Styles of Layout Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#render-tree-dumps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Render tree dumps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dumpastext-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      dumpAsText test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#js-testjs-and-js-test-prejs-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      js-test.js and js-test-pre.js tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dump-as-markupjs-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      dump-as-markup.js Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testharnessjs-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      testharness.js Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-runners" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Runners
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Runners">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extra-interfaces-available-in-test-runners" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra Interfaces Available in Test Runners
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabling-or-disabling-a-feature-in-test-runners" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling or Disabling a Feature in Test Runners
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-harness-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Harness Scripts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigating-test-failures-observed-on-bots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Investigating Test Failures Observed on Bots
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dive-into-api-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dive into API tests
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Deep Dive
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Deep Dive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/DOM.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DOM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/MemoryManagement.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Memory Management
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Architecture/AddingNewJSApi.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding JS APIs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Architecture/JSWrappers.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JS Wrappers and IDL Files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Architecture/Storage.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Storage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Architecture/WebKit2.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Build
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Build
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Build/AddingNewFile.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding a New File
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Build/CI.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Continuous Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Build/ConditionalCompilation.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conditional Compilation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Build/UnifiedBuilds.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unified Build System
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            GitHub
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/GitHub/GitConfig.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Git Config
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/GitHub/GitHub.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/GitHub/Merging.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/GitHub/Migration.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/GitHub/PullRequests.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pull Requests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/GitHub/SourceControl.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Source Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    JSC
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            JSC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/JSC/JSCObjectAccessOptimization.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Object Access Optimization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/JSC/JSCTypeInference.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Type Inference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/JSC/JavaScriptCore.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JavaScriptCore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Layout & Rendering
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            Layout & Rendering
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Layout%20%26%20Rendering/DisplayTree.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LFC Display Tree
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Libpas
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            Libpas
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Libpas/Internals.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Internals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Libpas/Libpas.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Libpas
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Libpas/LibpasBuildAndTest.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How To Build And Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            Modules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Modules/CompressionStreams.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compression Streams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Modules/MediaSourceExtensions.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Media Source Extensions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deep%20Dive/Modules/Modules.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modules
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting%20Started/BugTracking.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bug Tracking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting%20Started/ContributingCode.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started Contributing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting%20Started/Introduction.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction to WebKit
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Infrastructure
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Infrastructure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Infrastructure/MemoryInspection.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Memory Inspection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Infrastructure/UpdatingAngle.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Update ANGLE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Infrastructure/WPTTests.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Web Platform Tests Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributors.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contributors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Licensing.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Licensing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Contributor Meetings
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            Contributor Meetings
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2010.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2010
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2011.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2011
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2012.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2012
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2013.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2013
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2014.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2014
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2015.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2015
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2016.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2016
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2017.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2017
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2018.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2018
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2019.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2019
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2020.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2021.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2021
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2022.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributor Meeting 2022
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other/Contributor%20Meetings/ContributorMeeting2023.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebKit Contributors Meeting 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ports
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Ports
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/Introduction.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    What Are WebKit Ports?
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/WindowsPort.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows port
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    WebKitGTK and WPE WebKit
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            WebKitGTK and WPE WebKit
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/WebKitGTK%20and%20WPE%20WebKit/DependenciesPolicy.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependencies Policy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/WebKitGTK%20and%20WPE%20WebKit/GCCRequirement.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GCC Requirement
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/WebKitGTK%20and%20WPE%20WebKit/Multimedia.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Multimedia
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/WebKitGTK%20and%20WPE%20WebKit/ReleasesAndVersioning.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Releases and Versioning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/WebKitGTK%20and%20WPE%20WebKit/SecurityUpdates.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Security Updates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Ports/WebKitGTK%20and%20WPE%20WebKit/TipsForMaintainers.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tips for Maintainers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#correctness-testing-in-webkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correctness Testing in WebKit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-testing-in-webkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Testing in WebKit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layout-tests-tests-of-the-web-for-the-web" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layout Tests: Tests of the Web for the Web
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Layout Tests: Tests of the Web for the Web">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-files-and-expected-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Files and Expected Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Files and Expected Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Directory Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imported-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Imported Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      HTTP Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-expectations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Expectations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-layout-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Layout Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Layout Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#repeating-layout-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Repeating Layout Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-expected-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Updating Expected Results
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#different-styles-of-layout-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Different Styles of Layout Tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Different Styles of Layout Tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#render-tree-dumps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Render tree dumps
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dumpastext-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      dumpAsText test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#js-testjs-and-js-test-prejs-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      js-test.js and js-test-pre.js tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dump-as-markupjs-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      dump-as-markup.js Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testharnessjs-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      testharness.js Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reference Tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-runners" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Runners
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Runners">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extra-interfaces-available-in-test-runners" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extra Interfaces Available in Test Runners
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enabling-or-disabling-a-feature-in-test-runners" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enabling or Disabling a Feature in Test Runners
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-harness-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test Harness Scripts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigating-test-failures-observed-on-bots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Investigating Test Failures Observed on Bots
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dive-into-api-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dive into API tests
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/webkit/Documentation/blob/main/docs/Build & Debug/Tests.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h1>
+<p>A deep dive into WebKit's Tests.</p>
+<h2 id="correctness-testing-in-webkit">Correctness Testing in WebKit<a class="headerlink" href="#correctness-testing-in-webkit" title="Permanent link">&para;</a></h2>
+<p>WebKit is really big on test driven development, we have many types of tests.</p>
+<ul>
+<li><strong>JavaScript tests</strong> - Resides in top-level <a href="https://github.com/WebKit/WebKit/tree/main/JSTests">JSTests</a> directory.
+    This is the primary method of testing JavaScriptCore. Use <code>Tools/Scripts/run-javascriptcore-tests</code> to run these tests.</li>
+<li><strong>Layout tests</strong> - Resides in top-level <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests">LayoutTests</a> directory.
+    This is the primary method of testing WebCore.
+    If you’re making code changes to WebCore, you typically run these tests. Use <code>Tools/Scripts/run-webkit-tests</code> to run these.
+    Pass <code>-1</code> to run tests using WebKitLegacy (a.k.a. WebKit1).
+    <a href="https://github.com/WebKit/WebKit/tree/main/Tools/WebKitTestRunner">WebKitTestRunner</a> is used to run these tests for WebKit2,
+    and <a href="https://github.com/WebKit/WebKit/tree/main/Tools/DumpRenderTree">DumpRenderTree</a> is used to these tests for WebKit1.
+    There are a few styles of layout tests but all of them have a test file and expected result (ends with -expected.txt),
+    and the test passes if the test file’s output matches that of the expected result.</li>
+<li><strong>API tests</strong> - Reside in <a href="https://github.com/WebKit/WebKit/tree/main/Tools/TestWebKitAPI">Tools/TestWebKitAPI</a>,
+    these are <a href="https://en.wikipedia.org/wiki/Google_Test">GTests</a> that test APIs exposed by JavaScriptCore,
+    WebKitLegacy, and WebKit layers as well as unit tests for selected WTF classes.
+    WebKit does not use <a href="https://developer.apple.com/documentation/xctest">XCTests</a>.
+    Use <code>Tools/Scripts/run-api-tests</code> to run these tests.
+    Because these API tests are sequentially, it’s preferable to write layout tests when possible.</li>
+<li><strong>Bindings tests</strong> - Reside in <a href="https://github.com/WebKit/WebKit/tree/main/Source/WebCore/bindings/scripts/test">Source/WebCore/bindings/scripts/test</a>,
+    these are tests for WebCore’s binding code generator.
+    Use <code>Tools/Scripts/run-bindings-tests</code> to run these tests.</li>
+<li><strong>webkitpy tests</strong> - Tests for WebKit’s various Python scripts in <a href="https://github.com/WebKit/WebKit/tree/main/Tools/Scripts/webkitpy">Tools/Scripts/webkitpy</a>.
+    Use <code>Tools/Scripts/test-webkitpy</code> to run these tests.</li>
+<li><strong>webkitperl tests</strong> - Tests for WebKit’s various Perl scripts in <a href="https://github.com/WebKit/WebKit/tree/main/Tools/Scripts/webkitperl">Tools/Scripts/webkitperl</a>.
+    Use <code>Tools/Scripts/test-webkitperl</code> to run these tests.</li>
+</ul>
+<h2 id="performance-testing-in-webkit">Performance Testing in WebKit<a class="headerlink" href="#performance-testing-in-webkit" title="Permanent link">&para;</a></h2>
+<p>The WebKit project has a "no performance regression" policy.
+We maintain the performance of the following of the benchmarks and are located under <a href="https://github.com/WebKit/WebKit/tree/main/PerformanceTests">PerformanceTests</a>.
+If your patch regresses one of these benchmarks even slightly (less than 1%), it will get reverted.</p>
+<ul>
+<li><strong>JetStream2</strong> - Measures JavaScript and WASM performance.</li>
+<li><strong>MotionMark</strong> - Measures graphics performance.</li>
+<li><strong>Speedometer 3</strong> - Measures WebKit’s performance for complex web apps.</li>
+</ul>
+<p>The following are benchmarks maintained by Apple's WebKit team but not available to other open source contributors
+since Apple doesn't have the right to redistribute the content.
+If your WebKit patch regresses one of these tests, your patch may still get reverted.</p>
+<ul>
+<li><strong>RAMification</strong> - Apple's internal JavaScript memory benchmark.</li>
+<li><strong>ScrollPerf</strong> - Apple's internal scrolling performance tests.</li>
+<li><strong>PLT</strong> - Apple's internal page load time tests.</li>
+<li><strong>Membuster / PLUM</strong> - Apple's internal memory tests. Membuster for macOS and PLUM for iOS and iPadOS.</li>
+</ul>
+<h2 id="layout-tests-tests-of-the-web-for-the-web">Layout Tests: Tests of the Web for the Web<a class="headerlink" href="#layout-tests-tests-of-the-web-for-the-web" title="Permanent link">&para;</a></h2>
+<p>Layout tests are WebKit tests written using Web technology such as HTML, CSS, and JavaScript,
+and it’s the primary mechanism by which much of WebCore is tested.
+Relevant layout test should be ran while you’re making code changes to WebCore and before uploading a patch to <a href="https://bugs.webkit.org/">bugs.webkit.org</a>.
+While <a href="https://bugs.webkit.org/">bugs.webkit.org</a>’s Early Warning System will build and run tests on a set of configurations,
+individual patch authors are ultimately responsible for any test failures that their patches cause.</p>
+<h3 id="test-files-and-expected-files">Test Files and Expected Files<a class="headerlink" href="#test-files-and-expected-files" title="Permanent link">&para;</a></h3>
+<h4 id="directory-structure">Directory Structure<a class="headerlink" href="#directory-structure" title="Permanent link">&para;</a></h4>
+<p><a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests">LayoutTests</a> directory is organized by the category of tests.
+For example, <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/accessibility">LayoutTests/accessibility</a> contains accessibility related tests,
+and <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/fast/dom/HTMLAnchorElement">LayoutTests/fast/dom/HTMLAnchorElement</a> contains
+tests for <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a">the HTML anchor element</a>.</p>
+<p>Any file that ends in <code>.html</code>, <code>.htm</code>, <code>.shtml</code>, <code>.xhtml</code>, <code>.mht</code>, <code>.xht</code>, <code>.xml</code>, <code>.svg</code>, or <code>.php</code> is considered as a test
+unless it’s preceded with <code>-ref</code>, <code>-notref</code>, <code>-expected</code>, or <code>-expected-mismatch</code> (these are used for ref tests; explained later).
+It’s accompanied by another file of the same name except it ends in <code>-expected.txt</code> or <code>-expected.png</code>.
+These are called <em>expected results</em> and constitutes the baseline output of a given test.
+When layout tests are ran, the test runner generates an output in the form of a plain text file and/or an PNG image,
+and it is compared against these expected results.</p>
+<p>In the case expected results may differ from one platform to another,
+the expected results for each test is stored in <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/platform">LayoutTests/platform</a>.
+The expected result of a given test exists in the corresponding directory in
+each subdirectory of <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/platform">LayoutTests/platform</a>.
+For example, the expected result of <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/svg/W3C-SVG-1.1/animate-elem-46-t.svg">LayoutTests/svg/W3C-SVG-1.1/animate-elem-46-t.svg</a>
+for macOS Mojave is located at <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/platform/mac-mojave/svg/W3C-SVG-1.1/animate-elem-46-t-expected.txt">LayoutTests/platform/mac-mojave/svg/W3C-SVG-1.1/animate-elem-46-t-expected.txt</a>.</p>
+<p>These platform directories have a fallback order.
+For example, running tests for WebKit2 on macOS Catalina will use the following fallback path from the most specific to most generic:</p>
+<ul>
+<li>platform/mac-catalina-wk2 - Results for WebKit2 on macOS Catalina.</li>
+<li>platform/mac-catalina - Results for WebKit2 and WebKitLegacy on macOS Catalina.</li>
+<li>platform/mac-wk2 - Results for WebKit2 on all macOS.</li>
+<li>platform/mac - Results for all macOS.</li>
+<li>platform/wk2 - Results for WebKit2 on every operating system.</li>
+<li>generic - Next to the test file.</li>
+</ul>
+<h4 id="imported-tests">Imported Tests<a class="headerlink" href="#imported-tests" title="Permanent link">&para;</a></h4>
+<p>Tests under <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/imported">LayoutTests/imported</a> are imported from other repositories.
+<strong>They should not be modified by WebKit patches</strong> unless the change is made in respective repositories first.</p>
+<p>Most notable is <a href="https://web-platform-tests.org/">Web Platform Tests</a>,
+which are imported under <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/imported/w3c/web-platform-tests">LayoutTests/imported/w3c/web-platform-tests</a>.
+These are cross browser vendor tests developed by W3C. Mozilla, Google, and Apple all contribute many tests to this shared test repository.</p>
+<h4 id="http-tests">HTTP Tests<a class="headerlink" href="#http-tests" title="Permanent link">&para;</a></h4>
+<p>To open tests under <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/http">LayoutTests/http</a> or
+<a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/imported/w3c/web-platform-tests">LayoutTests/imported/w3c/web-platform-tests</a>,
+use <a href="https://github.com/WebKit/WebKit/blob/main/Tools/Scripts/open-layout-test">Tools/Scripts/open-layout-test</a> with the path to a test.</p>
+<p>You can also manually start HTTP servers with <a href="https://github.com/WebKit/WebKit/blob/main/Tools/Scripts/run-webkit-httpd"><code>Tools/Scripts/run-webkit-httpd</code></a>.
+To stop the HTTP servers, exit the script (e.g. Control + C on macOS).</p>
+<p>Tests under <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/http">LayoutTests/http</a> are accessible at <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>
+except tests in <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/http/wpt">LayoutTests/http/wpt</a>,
+which are available at <a href="http://localhost:8800/WebKit/">http://localhost:8800/WebKit/</a> instead.</p>
+<p>The <a href="https://web-platform-tests.org/">Web Platform Tests</a> imported under
+<a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/imported/w3c/web-platform-tests">LayoutTests/imported/w3c/web-platform-tests</a>
+are accessible under HTTP at <a href="http://localhost:8800/">http://localhost:8800/</a> and HTTPS at <a href="http://localhost:9443/">http://localhost:9443/</a></p>
+<p>Note that it's important to use the exact host names such as <code>127.0.0.1</code> and <code>localhost</code> above verbatim
+since some tests rely on or test same-origin or cross-origin behaviors based on those host names.</p>
+<h2 id="test-expectations">Test Expectations<a class="headerlink" href="#test-expectations" title="Permanent link">&para;</a></h2>
+<p>FIXME: Explain how test expectations work.</p>
+<h2 id="running-layout-tests">Running Layout Tests<a class="headerlink" href="#running-layout-tests" title="Permanent link">&para;</a></h2>
+<p>To run layout tests, use <code>Tools/Scripts/run-webkit-tests</code>.
+It optionally takes file paths to a test file or directory and options on how to run a test.
+For example, in order to just run <code>LayoutTests/fast/dom/Element/element-traversal.html</code>, do:</p>
+<pre><code class="language-sh">Tools/Scripts/run-webkit-tests fast/dom/Element/element-traversal.html
+</code></pre>
+<p>Because there are 50,000+ tests in WebKit,
+you typically want to run a subset of tests that are relevant to your code change
+(e.g. <code>LayoutTests/storage/indexeddb/</code> if you’re working on IndexedDB) while developing the code change,
+and run all layout tests at the end on your local machine or rely on the Early Warning System on <a href="https://bugs.webkit.org/">bugs.webkit.org</a> for more thorough testing.</p>
+<p>Specify <code>--debug</code> or <code>--release</code> to use either release or debug build.
+To run tests using iOS simulator, you can specify either <code>--ios-simulator</code>, <code>--iphone-simulator</code>,
+or <code>--ipad-simulator</code> based on whichever simulator is desired.</p>
+<p>By default, <code>run-webkit-tests</code> will run all the tests you specified once in the lexicological order of test paths
+relative to <code>LayoutTests</code> directory and retry any tests that have failed.
+If you know the test is going to fail and don’t want retries, specify <code>--no-retry-failures</code>.</p>
+<p>Because there are so many tests, <code>run-webkit-tests</code> will runs tests in different directories in parallel
+(i.e. all tests in a single directory is ran sequentially one after another).
+You can control the number of parallel test runners using <code>--child-processes</code> option.</p>
+<p><code>run-webkit-tests</code> has many options.
+Use <code>--help</code> to enumerate all the supported options.</p>
+<h3 id="repeating-layout-tests">Repeating Layout Tests<a class="headerlink" href="#repeating-layout-tests" title="Permanent link">&para;</a></h3>
+<p>When you’re investigating flaky tests or crashes, it might be desirable to adjust this.
+<code>--iterations X</code> option will specify the number of times the list of tests are ran.
+For example, if we are running tests A, B, C and <code>--iterations 3</code> is specified,
+<code>run-webkit-tests</code> will run: A, B, C, A, B, C, A, B, C.
+Similarly, <code>--repeat-each</code> option will specify the number of times each test is repeated before moving onto next test.
+For example, if we’re running tests A, B, C, and <code>--repeat-each 3</code> is specified, <code>run-webkit-tests</code> will run: A, A, A, B, B, B, C, C, C.
+<code>--exit-after-n-failures</code> option will specify the total number of test failures before <code>run-webkit-tests</code> will stop.
+In particular, <code>--exit-after-n-failures=1</code> is useful when investigating a flaky failure
+so that <code>run-webkit-tests</code> will stop when the failure actually happens for the first time.</p>
+<h3 id="test-results">Test Results<a class="headerlink" href="#test-results" title="Permanent link">&para;</a></h3>
+<p>Whenever tests do fail, run-webkit-tests will store results in <code>WebKitBuild/Debug/layout-test-results</code>
+mirroring the same directory structure as <code>LayoutTests</code>.
+For example, the actual output produced for <code>LayoutTests/editing/inserting/typing-001.html</code>,
+if failed, will appear in <code>WebKitBuild/Debug/layout-test-results/editing/inserting/typing-001-actual.txt</code>.
+run-webkit-tests also generates a web page with the summary of results in
+<code>WebKitBuild/Debug/layout-test-results/results.html</code> and automatically tries to open it in Safari using the local build of WebKit.</p>
+<blockquote>
+<p>If Safari fails to launch, specify <code>--no-show-results</code> and open results.html file manually.</p>
+</blockquote>
+<h4 id="updating-expected-results">Updating Expected Results<a class="headerlink" href="#updating-expected-results" title="Permanent link">&para;</a></h4>
+<p>If you’ve updated a test content or test’s output changes with your code change (e.g. more test case passes),
+then you may have to update <code>-expected.txt</code> file accompanying the test.
+To do that, first run the test once to make sure the diff and new output makes sense in results.html,
+and run the test again with <code>--reset-results</code>.
+This will update the matching <code>-expected.txt</code> file.</p>
+<p>You may need to manually copy the new result to other -expected.txt files that exist under <code>LayoutTests</code> for other platforms and configurations.
+Find other <code>-expected.txt</code> files when you’re doing this.</p>
+<p>When a new test is added, <code>run-webkit-tests</code> will automatically generate new <code>-expected.txt</code> file for your test.
+You can disable this feature by specifying <code>--no-new-test-results</code> e.g. when the test is still under development.</p>
+<h3 id="different-styles-of-layout-tests">Different Styles of Layout Tests<a class="headerlink" href="#different-styles-of-layout-tests" title="Permanent link">&para;</a></h3>
+<p>There are multiple styles of layout tests in WebKit.</p>
+<h4 id="render-tree-dumps"><strong>Render tree dumps</strong><a class="headerlink" href="#render-tree-dumps" title="Permanent link">&para;</a></h4>
+<p>This is the oldest style of layout tests, and the default mode of layout tests.
+It’s a text serialization of WebKit’s render tree and its output looks like
+<a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/platform/mac/fast/dom/anchor-text-expected.txt">this</a>:</p>
+<pre><code>layer at (0,0) size 800x600
+  RenderView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  RenderBlock {HTML} at (0,0) size 800x600
+    RenderBody {BODY} at (8,8) size 784x584
+      RenderInline {A} at (0,0) size 238x18 [color=#0000EE]
+        RenderInline {B} at (0,0) size 238x18
+          RenderText {#text} at (0,0) size 238x18
+            text run at (0,0) width 238: &quot;the second copy should not be bold&quot;
+      RenderText {#text} at (237,0) size 5x18
+        text run at (237,0) width 5: &quot; &quot;
+      RenderText {#text} at (241,0) size 227x18
+        text run at (241,0) width 227: &quot;the second copy should not be bold&quot;
+</code></pre>
+<p>This style of layout tests is discouraged today because its outputs are highly dependent on each platform,
+and end up requiring a specific expected result in each platform.
+But they’re still useful when testing new rendering and layout feature or bugs thereof.</p>
+<p>These tests also have accompanying <code>-expected.png</code> files but <code>run-webkit-tests</code> doesn't check the PNG output against the expected result by default.
+To do this check, pass <code>--pixel</code>.
+Unfortunately, many <em>pixel tests</em> will fail because we have not been updating the expected PNG results a good chunk of the last decade.
+However, these pixel results might be useful when diagnosing a new test failure.
+For this reason, <code>run-webkit-tests</code> will automatically generate PNG results when retrying the test,
+effectively enabling <code>--pixel</code> option for retries.</p>
+<h4 id="dumpastext-test">dumpAsText test<a class="headerlink" href="#dumpastext-test" title="Permanent link">&para;</a></h4>
+<p>These are tests that uses the plain text serialization of the test page as the output (as if the entire page’s content is copied as plain text).
+All these tests call <code>testRunner.dumpAsText</code> to trigger this behavior.
+The output typically contains a log of text or other informative output scripts in the page produced.
+For example, <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/fast/dom/anchor-toString.html">LayoutTests/fast/dom/anchor-toString.html</a> is written as follows:</p>
+<pre><code class="language-html">&lt;a href=&quot;http://localhost/sometestfile.html&quot; id=&quot;anchor&quot;&gt;
+A link!
+&lt;/a&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;script&gt;
+    {
+        if (window.testRunner)
+            testRunner.dumpAsText();
+
+        var anchor = document.getElementById(&quot;anchor&quot;);
+        document.write(&quot;Writing just the anchor object - &quot; + anchor);
+
+        var anchorString = String(anchor);
+        document.write(&quot;&lt;br&gt;&lt;br&gt;Writing the result of the String(anchor) - &quot; + anchorString);
+
+        var anchorToString = anchor.toString();
+        document.write(&quot;&lt;br&gt;&lt;br&gt;Writing the result of the anchor's toString() method - &quot; + anchorToString);
+    }
+&lt;/script&gt;
+</code></pre>
+<p>and generates the following <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/fast/dom/anchor-toString-expected.txt">output</a>:</p>
+<pre><code>A link! 
+
+Writing just the anchor object - http://localhost/sometestfile.html
+
+Writing the result of the String(anchor) - http://localhost/sometestfile.html
+
+Writing the result of the anchor's toString() method - http://localhost/sometestfile.html
+</code></pre>
+<h4 id="js-testjs-and-js-test-prejs-tests">js-test.js and js-test-pre.js tests<a class="headerlink" href="#js-testjs-and-js-test-prejs-tests" title="Permanent link">&para;</a></h4>
+<p>These are variants of dumpAsText test which uses WebKit’s assertion library:
+<a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/js-test.js">LayoutTests/resources/js-test.js</a>
+and <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/js-test-pre.js">LayoutTests/resources/js-test-pre.js</a>.
+It consists of shouldX function calls which takes two JavaScript code snippet which are then executed and outputs of which are compared.
+js-test.js is simply a new variant of js-test-pre.js that doesn’t require
+the inclusion of <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/js-test-post.js">LayoutTests/resources/js-test-post.js</a> at the end.
+<strong>Use js-test.js in new tests</strong>, not js-test-pre.js.</p>
+<p>For example, <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/fast/dom/Comment/remove.html">LayoutTests/fast/dom/Comment/remove.html</a>
+which tests <a href="https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove">remove()</a> method
+on <a href="https://developer.mozilla.org/en-US/docs/Web/API/Comment">Comment node</a> is written as:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;script src=&quot;../../../resources/js-test-pre.js&quot;&gt;&lt;/script&gt;
+&lt;div id=&quot;test&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+
+description('This tests the DOM 4 remove method on a Comment.');
+
+var testDiv = document.getElementById('test');
+var comment = document.createComment('Comment');
+testDiv.appendChild(comment);
+shouldBe('testDiv.childNodes.length', '1');
+comment.remove();
+shouldBe('testDiv.childNodes.length', '0');
+comment.remove();
+shouldBe('testDiv.childNodes.length', '0');
+
+&lt;/script&gt;
+&lt;script src=&quot;../../../resources/js-test-post.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>with the following <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/fast/dom/Comment/remove-expected.txt">expected result</a> (output):</p>
+<pre><code>This tests the DOM 4 remove method on a Comment.
+
+On success, you will see a series of &quot;PASS&quot; messages, followed by &quot;TEST COMPLETE&quot;.
+
+
+PASS testDiv.childNodes.length is 1
+PASS testDiv.childNodes.length is 0
+PASS testDiv.childNodes.length is 0
+PASS successfullyParsed is true
+
+TEST COMPLETE
+</code></pre>
+<p><code>description</code> function specifies the description of this test, and subsequent shouldBe calls takes two strings,
+both of which are evaluated as JavaScript and then compared.</p>
+<p>Some old js-test-pre.js tests may put its test code in a separate JS file but we don’t do that anymore to keep all the test code in one place.</p>
+<p><a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/js-test.js">js-test.js</a> and <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/js-test-pre.js">js-test-pre.js</a> provide all kinds of other assertion and helper functions.
+Here are some examples:</p>
+<ul>
+<li><code>debug(msg)</code> - Inserts a debug / log string in the output.</li>
+<li><code>evalAndLog(code)</code> - Similar to <code>debug()</code> but evaluates code as JavaScript.</li>
+<li><code>shouldNotBe(a, b)</code> - Generates <code>PASS</code> if the results of evaluating <code>a</code> and <code>b</code> differ.</li>
+<li><code>shouldBeTrue(code)</code> - Shorthand for <code>shouldBe(code, 'true')</code>.</li>
+<li><code>shouldBeFalse(code)</code> - Shorthand for <code>shouldBe(code, 'false')</code>.</li>
+<li><code>shouldBeNaN(code)</code> - Shorthand for <code>shouldBe(code, 'NaN')</code>.</li>
+<li><code>shouldBeNull(code)</code> - Shorthand for <code>shouldBe(code, 'null')</code>.</li>
+<li><code>shouldBeZero(code)</code> - Shorthand for <code>shouldBe(code, '0')</code>.</li>
+<li><code>shouldBeEqualToString(code, string)</code> - Similar to <code>shouldBe</code> but the second argument is not evaluated as string.</li>
+<li><code>finishJSTest()</code> - When js-test.js style test needs to do some async work, define the global variable named jsTestIsAsync and set it to true. When the test is done, call this function to notify the test runner (don’t call <code>testRunner.notifyDone</code> mentioned later directly). See <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/fast/dom/iframe-innerWidth.html">an example</a>.</li>
+</ul>
+<p><strong>It’s important to note that these shouldX functions only add output strings that say PASS or FAIL. If the expected result also contains the same FAIL strings, then run-webkit-tests will consider the whole test file to have passed.</strong></p>
+<p>Another way to think about this is that <code>-expected.txt</code> files are baseline outputs, and baseline outputs can contain known failures.</p>
+<p>There is a helper script to create a template for a new js-test.js test. The following will create new test named <code>new-test.html</code> in <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/fast/dom">LayoutTests/fast/dom</a>:</p>
+<pre><code class="language-sh">Tools/Scripts/make-new-script-test fast/dom/new-test.html
+</code></pre>
+<h4 id="dump-as-markupjs-tests">dump-as-markup.js Tests<a class="headerlink" href="#dump-as-markupjs-tests" title="Permanent link">&para;</a></h4>
+<p>A dump-as-markup.js test is yet another variant of dumpAsText test,
+which uses <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/dump-as-markup.js">LayoutTests/resources/dump-as-markup.js</a>.
+This style of test is used when it’s desirable to compare the state of the DOM tree before and after some operations.
+For example, many tests under <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/editing">LayoutTests/editing</a>
+use this style of testing to test complex DOM mutation operations such as pasting HTML from the users’ clipboard.
+dump-as-markup.js adds <code>Markup</code> on the global object and exposes a few helper functions.
+Like js-test.js tests, a test description can be specified via <code>Markup.description</code>.
+The test then involves <code>Markup.dump(node, description)</code> to serialize the state of DOM tree as plain text
+where <code>element</code> is either a DOM <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node">node</a>
+under which the state should be serialized or its <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id">id</a>.</p>
+<p>For example, <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/editing/inserting/insert-list-in-table-cell-01.html">LayoutTests/editing/inserting/insert-list-in-table-cell-01.html</a> is written as follows:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;div id=&quot;container&quot; contenteditable=&quot;true&quot;&gt;&lt;table border=&quot;1&quot;&gt;&lt;tr&gt;&lt;td id=&quot;element&quot;&gt;fsdf&lt;/td&gt;&lt;td&gt;fsdf&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;gghfg&lt;/td&gt;&lt;td&gt;fsfg&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;script src=&quot;../editing.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../../resources/dump-as-markup.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    Markup.description('Insert list items in a single table cell:');
+
+    var e = document.getElementById(&quot;element&quot;);
+    setSelectionCommand(e, 0, e, 1);
+    Markup.dump('container', 'Before');
+
+    document.execCommand(&quot;insertOrderedList&quot;);
+    Markup.dump('container', 'After');
+&lt;/script&gt;
+</code></pre>
+<p>with the following <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/editing/inserting/insert-list-in-table-cell-01-expected.txt">expected result</a>:</p>
+<pre><code>Insert list items in a single table cell:
+
+Before:
+| &lt;table&gt;
+|   border=&quot;1&quot;
+|   &lt;tbody&gt;
+|     &lt;tr&gt;
+|       &lt;td&gt;
+|         id=&quot;element&quot;
+|         &quot;&lt;#selection-anchor&gt;fsdf&lt;#selection-focus&gt;&quot;
+|       &lt;td&gt;
+|         &quot;fsdf&quot;
+|     &lt;tr&gt;
+|       &lt;td&gt;
+|         &quot;gghfg&quot;
+|       &lt;td&gt;
+|         &quot;fsfg&quot;
+
+After:
+| &lt;table&gt;
+|   border=&quot;1&quot;
+|   &lt;tbody&gt;
+|     &lt;tr&gt;
+|       &lt;td&gt;
+|         id=&quot;element&quot;
+|         &lt;ol&gt;
+|           &lt;li&gt;
+|             &quot;&lt;#selection-anchor&gt;fsdf&lt;#selection-focus&gt;&quot;
+|             &lt;br&gt;
+|       &lt;td&gt;
+|         &quot;fsdf&quot;
+|     &lt;tr&gt;
+|       &lt;td&gt;
+|         &quot;gghfg&quot;
+|       &lt;td&gt;
+|         &quot;fsfg&quot;
+</code></pre>
+<h4 id="testharnessjs-tests">testharness.js Tests<a class="headerlink" href="#testharnessjs-tests" title="Permanent link">&para;</a></h4>
+<p>This is yet another variant of dumpAsText test which uses the test harness of <a href="https://web-platform-tests.org/">Web Platform Tests</a>, 
+which is <a href="https://www.w3.org/">W3C</a>’s official tests for the Web.
+There is an <a href="https://web-platform-tests.org/writing-tests/testharness-api.html">extensive documentation</a> on how this harness works.</p>
+<blockquote>
+<p>As mentioned above, do not modify tests in <a href="https://github.com/WebKit/WebKit/tree/main/LayoutTests/imported/w3c/web-platform-tests">LayoutTests/imported/w3c/web-platform-tests</a>
+unless the same test changes are made in Web Platform Tests’ primary repository.</p>
+</blockquote>
+<h4 id="reference-tests">Reference Tests<a class="headerlink" href="#reference-tests" title="Permanent link">&para;</a></h4>
+<p>Reference tests are special in that they don’t have accompanying <code>-expected.txt</code> files.
+Instead, they have a matching or mismatching expected result file.
+Both the test file and the accompanying matching or mismatching expected result generate PNG outputs.
+The test passes if the PNG outputs of the test and the matching expected result are the same; the test fails otherwise.
+For a test with a mismatching expected result, the test passes if the PNG outputs of the test and the mismatching expected result are not the same, and fails if they are the same.</p>
+<p>A matching expected result or a mismatching expected result can be specified in a few ways:</p>
+<ul>
+<li>The file with the same name as the test name except it ends with  <code>-expected.*</code> or <code>-ref.*</code> is a matching expected result for the test.</li>
+<li>The file with the same name as the test name except it ends with  <code>-expected-mismatch.*</code> or <code>-notref.*</code> is a matching expected result for the test.</li>
+<li>The file specified by a HTML link element in the test file with <code>match</code> relation: <code>&lt;link rel=match href=X&gt;</code> where X is the relative file path is a matching expected result.</li>
+<li>The file specified by a HTML link element in the test file with <code>mismatch</code> relation: <code>&lt;link rel=mismatch href=X&gt;</code> where X is the relative file path is a mismatching expected result.</li>
+</ul>
+<p>For example, <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/imported/w3c/web-platform-tests/html/rendering/replaced-elements/images/space.html">LayoutTests/imported/w3c/web-platform-tests/html/rendering/replaced-elements/images/space.html</a> specifies <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/imported/w3c/web-platform-tests/html/rendering/replaced-elements/images/space-ref.html">space-ref.html</a> in the same directory as the matching expected result as follows:</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;meta charset=utf-8&gt;
+&lt;title&gt;img hspace/vspace&lt;/title&gt;
+&lt;link rel=match href=space-ref.html&gt;
+&lt;style&gt;
+span { background: blue; }
+&lt;/style&gt;
+&lt;div style=width:400px;&gt;
+&lt;p&gt;&lt;span&gt;&lt;img src=/images/green.png&gt;&lt;/span&gt;
+&lt;p&gt;&lt;span&gt;&lt;img src=/images/green.png hspace=10&gt;&lt;/span&gt;
+&lt;p&gt;&lt;span&gt;&lt;img src=/images/green.png vspace=10&gt;&lt;/span&gt;
+&lt;p&gt;&lt;span&gt;&lt;img src=/images/green.png hspace=10%&gt;&lt;/span&gt;
+&lt;p&gt;&lt;span&gt;&lt;img src=/images/green.png vspace=10%&gt;&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="test-runners">Test Runners<a class="headerlink" href="#test-runners" title="Permanent link">&para;</a></h3>
+<p>Most layout tests are designed to be runnable inside a browser but run-webkit-tests uses a special program to run them.
+Our continuous integration system as well as the Early Warning System uses run-webkit-tests to run layout tests.
+In WebKit2, this is appropriately named <a href="https://github.com/WebKit/WebKit/tree/main/Tools/WebKitTestRunner">WebKitTestRunner</a>.
+In WebKit1 or WebKitLegacy, it’s <a href="https://github.com/WebKit/WebKit/tree/main/Tools/DumpRenderTree">DumpRenderTree</a>,
+which is named after the very first type of layout tests, which generated the text representation of the render tree.</p>
+<h4 id="extra-interfaces-available-in-test-runners">Extra Interfaces Available in Test Runners<a class="headerlink" href="#extra-interfaces-available-in-test-runners" title="Permanent link">&para;</a></h4>
+<p>Both WebKitTestRunner and DumpRenderTree expose a few extra interfaces to JavaScript on <code>window</code> (i.e. global object) in order to emulate user inputs,
+enable or disable a feature, or to improve the reliability of testing.</p>
+<ul>
+<li><strong><a href="https://github.com/WebKit/WebKit/blob/main/Tools/WebKitTestRunner/InjectedBundle/Bindings/GCController.idl">GCController</a></strong><ul>
+<li><code>GCController.collect()</code> triggers a synchronous full garbage collection.
+This function is useful for testing crashes or erroneous premature collection of JS wrappers and leaks.</li>
+</ul>
+</li>
+<li><strong><a href="https://github.com/WebKit/WebKit/blob/main/Tools/WebKitTestRunner/InjectedBundle/Bindings/TestRunner.idl">testRunner</a></strong><ul>
+<li>TestRunner interface exposes many methods to control the behaviors of WebKitTestRunner and DumpRenderTree.
+Some the most commonly used methods are as follows:</li>
+<li><code>waitUntilDone()</code> / <code>notifyDone()</code> - These functions are useful when writing tests that involve asynchronous tasks
+    which may require the test to continue running beyond when it finished loading.
+    <code>testRunner.waitUntilDone()</code> makes WebKitTestRunner and DumpRenderTree not end the test when a layout test has finished loading.
+    The test continues until <code>testRunner.notifyDone()</code> is called.</li>
+<li><code>dumpAsText(boolean dumpPixels)</code> - Makes WebKitTestRunner and DumpRenderTree output the plain text of the loaded page instead of the state of the render tree.</li>
+<li><code>overridePreference(DOMString preference, DOMString value)</code> - Overrides WebKit’s <a href="https://github.com/WebKit/WebKit/tree/main/Source/WTF/Scripts/Preferences">preferences</a>.
+    For WebKitLegacy, these are defined in <a href="https://github.com/WebKit/WebKit/tree/main/Source/WebKitLegacy/mac/WebView/WebPreferences.h">Source/WebKitLegacy/mac/WebView/WebPreferences.h</a> for macOS
+    and <a href="https://github.com/WebKit/WebKit/tree/main/Source/WebKitLegacy/win/WebPreferences.h">Source/WebKitLegacy/win/WebPreferences.h</a> for Windows.</li>
+</ul>
+</li>
+<li><strong><a href="https://github.com/WebKit/WebKit/blob/main/Tools/WebKitTestRunner/InjectedBundle/Bindings/EventSendingController.idl">eventSender</a></strong><ul>
+<li>Exposes methods to emulate mouse, keyboard, and touch actions.
+<strong>Use <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/ui-helper.js">ui-helpers.js</a> script</strong> instead of directly calling methods on this function.
+This will ensure the test will be most compatible with all the test configurations we have.</li>
+</ul>
+</li>
+<li><a href="https://github.com/WebKit/WebKit/tree/main/Tools/TestRunnerShared/UIScriptContext/Bindings/UIScriptController.idl"><strong>UIScriptController</strong></a><ul>
+<li>Exposes methods to emulate user inputs like eventSender mostly on iOS WebKit2.
+ <strong>Use <a href="https://github.com/WebKit/WebKit/blob/main/LayoutTests/resources/ui-helper.js">ui-helpers.js</a> script</strong> instead of directly calling methods on this function.
+ This will ensure the test will be most compatible with all the test configurations we have.</li>
+</ul>
+</li>
+<li><strong><a href="https://github.com/WebKit/WebKit/blob/main/Tools/WebKitTestRunner/InjectedBundle/Bindings/TextInputController.idl">textInputController</a></strong><ul>
+<li>Exposes methods to test <a href="https://en.wikipedia.org/wiki/Input_method">input methods</a>.</li>
+</ul>
+</li>
+</ul>
+<p>Additionally, <a href="https://github.com/WebKit/WebKit/tree/main/Source/WebCore/testing">WebCore/testing</a> exposes a few testing hooks to test its internals:</p>
+<ul>
+<li><strong><a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/testing/Internals.idl">internals</a></strong><ul>
+<li>Exposes various hooks into WebCore that shouldn’t be part of WebKit or WebKitLegacy API.</li>
+</ul>
+</li>
+<li><a href="https://github.com/WebKit/WebKit/blob/main/Source/WebCore/testing/InternalSettings.idl"><strong>internals.settings</strong></a><ul>
+<li>Exposes various WebCore settings and let tests override them.
+Note that WebKit layer code may depend on preferences in UI process and the aforementioned <code>testRunner.overridePreference</code> may need to be used instead.
+It’s in fact preferable to override the equivalent preference via <code>testRunner.overridePreference</code>
+unless you know for sure WebKit or WebKitLegacy layer of code isn’t affected by the setting you’re overriding.</li>
+</ul>
+</li>
+</ul>
+<h4 id="enabling-or-disabling-a-feature-in-test-runners">Enabling or Disabling a Feature in Test Runners<a class="headerlink" href="#enabling-or-disabling-a-feature-in-test-runners" title="Permanent link">&para;</a></h4>
+<p>FIXME: Mention test-runner-options</p>
+<h3 id="test-harness-scripts">Test Harness Scripts<a class="headerlink" href="#test-harness-scripts" title="Permanent link">&para;</a></h3>
+<p>FIXME: Write about dump-as-markup.js, and ui-helper.js</p>
+<h3 id="investigating-test-failures-observed-on-bots">Investigating Test Failures Observed on Bots<a class="headerlink" href="#investigating-test-failures-observed-on-bots" title="Permanent link">&para;</a></h3>
+<p>There are multiple tools to investigate test failures happening on our continuous integration system
+(<a href="https://build.webkit.org/">build.webkit.org</a>).
+The most notable is flakiness dashboard:
+<a href="https://results.webkit.org/">results.webkit.org</a></p>
+<p>FIXME: Write how to investigate a test failure.</p>
+<h2 id="dive-into-api-tests">Dive into API tests<a class="headerlink" href="#dive-into-api-tests" title="Permanent link">&para;</a></h2>
+<p>FIXME: Talk about how to debug API tests.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      WebKit and the WebKit logo are trademarks of Apple Inc.
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+    
+    
+    
+      
+      
+    
+    <a href="https://front-end.social/@webkit" target="_blank" rel="noopener me" title="front-end.social" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.5 102.5 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5m-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://webkit.slack.com" target="_blank" rel="noopener" title="webkit.slack.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1s21.16-47.06 47.06-47.06h47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06S448 171 448 196.9s-21.16 47.06-47.06 47.06h-47.06zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06S309 480 283.1 480s-47.06-21.16-47.06-47.06v-47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06s21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/webkit/webkit" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["header.autohide", "search.share", "navigation.tabs", "navigation.tracking", "content.action.edit"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
